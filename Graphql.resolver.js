@@ -98,7 +98,7 @@ const resolvers = {
                   },
                   { new: true }
                );
-               return input;
+               return patient;
             } catch (error) {
                console.log(error);
             }
@@ -116,6 +116,7 @@ const resolvers = {
                   { $set: { address: input } },
                   { new: true }
                );
+               return patient;
             } catch (error) {
                console.log(error);
             }
@@ -139,7 +140,7 @@ const resolvers = {
                   { new: true }
                );
             }
-            return newVitals;
+            return patient;
          } catch (error) {
             console.log(error);
          }
@@ -153,7 +154,7 @@ const resolvers = {
                   { _id: input.patientId },
                   { $set: { examination: input } }
                );
-               return input;
+               return patient;
             } catch (error) {
                console.log(error);
             }

@@ -26,11 +26,11 @@ const typeDefs = gql`
       test: Int
    }
    input PatientInput {
-      patientID: String
-      firstName: String
-      lastName: String
-      dob: String
-      gender: String
+      patientID: String!
+      firstName: String!
+      lastName: String!
+      dob: String!
+      gender: String!
       preferredCommunication: String
       language: [String]
       conditions: [String]
@@ -105,9 +105,9 @@ const typeDefs = gql`
    type Mutation {
       createPatient(input: PatientInput): Patient
       updatePatient(id: ID!, input: PatientInput): Patient
-      createInsurance(input: InsuranceInput): Insurance
-      createAddress(input: AddressInput): Address
-      createExamination(input: ExaminationInput): Examination
+      createInsurance(input: InsuranceInput): Patient
+      createAddress(input: AddressInput): Patient
+      createExamination(input: ExaminationInput): Patient
 
       createVital(
          vitalType: String

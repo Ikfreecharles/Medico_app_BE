@@ -7,6 +7,7 @@ const { examinationSchema } = require("./Examination.model");
 const patientSchema = new Schema(
    {
       patientID: { type: String, required: true, trim: true },
+      userAvatar: { type: String },
       firstName: { type: String, required: true, trim: true },
       lastName: { type: String, required: true, trim: true },
       dob: { type: String, required: true, trim: true },
