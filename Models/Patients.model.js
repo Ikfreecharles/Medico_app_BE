@@ -12,8 +12,15 @@ const patientSchema = new Schema(
       lastName: { type: String, required: true, trim: true },
       dob: { type: String, required: true, trim: true },
       gender: { type: String, required: true, trim: true },
+      height: { type: String, trim: true },
+      weight: { type: String, trim: true },
+      maritalStatus: { type: String, trim: true },
+      hobbies: [{ type: String, trim: true }],
+      spouse: { type: String, trim: true },
+      children: { type: Number, trim: true },
       address: { type: addressSchema, default: {} },
       preferredCommunication: { type: String },
+      email: { type: String, trim: true },
       language: { type: [String] },
       insurance: { type: insuranceSchema, default: {} },
       conditions: { type: [String], default: [] },
@@ -27,6 +34,9 @@ const patientSchema = new Schema(
       diagnosis: { type: String, trim: true },
       recovery: { type: Number, trim: true },
       test: { type: Number, trim: true },
+      activities: [
+         { type: Schema.Types.ObjectId, ref: "activity", default: [] },
+      ],
    },
    { timestamps: true }
 );

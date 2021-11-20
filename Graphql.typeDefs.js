@@ -10,7 +10,14 @@ const typeDefs = gql`
       dob: String!
       gender: String!
       address: Address
+      height: String
+      weight: String
+      maritalStatus: String
+      hobbies: [String]
+      spouse: String
+      children: Int
       preferredCommunication: String
+      email: String
       language: [String]
       insurance: Insurance
       conditions: [String]
@@ -24,6 +31,7 @@ const typeDefs = gql`
       diagnosis: String
       recovery: Int
       test: Int
+      activities: [Activity]
    }
    input PatientInput {
       patientID: String!
@@ -31,7 +39,14 @@ const typeDefs = gql`
       lastName: String!
       dob: String!
       gender: String!
+      height: String
+      weight: String
+      maritalStatus: String
+      hobbies: [String]
+      spouse: String
+      children: Int
       preferredCommunication: String
+      email: String
       language: [String]
       conditions: [String]
       medications: [String]
@@ -42,6 +57,14 @@ const typeDefs = gql`
       diagnosis: String
       recovery: Int
       test: Int
+   }
+   input VitalInput {
+      patientId: ID!
+      vitalType: String
+      vitalNumber: String
+      unit: String
+      changeInfo: String
+      changeDirection: Int
    }
    input AddressInput {
       patientId: ID!
@@ -58,6 +81,21 @@ const typeDefs = gql`
       patientId: ID!
       marker: Int!
       examination: String!
+   }
+   input ActivityInput {
+      patientId: ID!
+      activity: String!
+      activitySince: String!
+      progress: Int!
+   }
+   input GoalsInput {
+      activityId: ID!
+      subject: String!
+      priority: String!
+      date: String!
+      status: Int
+      frequency: String!
+      assignedTo: String!
    }
 
    type Vital {
@@ -85,12 +123,44 @@ const typeDefs = gql`
       marker: Int
       examination: String
    }
+   type Activity {
+      id: ID!
+      activity: String!
+      activitySince: String!
+      progress: Int
+      goals: [Goals]
+      patientId: Patient
+   }
+   type Goals {
+      id: ID!
+      subject: String!
+      priority: String
+      date: String!
+      status: Int
+      frequency: String!
+      assignedTo: String
+   }
 
    #Doctor Definition
    type Doctor {
       id: ID!
       firstName: String!
       lastName: String!
+      dob: String!
+      gender: String!
+      phoneNumber: Int!
+      workPlace: String
+      agent: String
+      patientId: Patient
+   }
+   input DoctorInput {
+      firstName: String!
+      lastName: String!
+      dob: String!
+      gender: String!
+      phoneNumber: Int!
+      workPlace: String
+      agent: String
    }
 
    #Queries
@@ -99,6 +169,9 @@ const typeDefs = gql`
       getOnePatient(id: ID!): Patient
       getVitals: [Vital]
       getPatientVitals(id: ID!): [Vital]
+      getAllPatientActivities(patientId: ID!): [Activity]
+      getAllDoctors: [Doctor]
+      getOneDoctor(id: ID!): Doctor
    }
 
    #Mutations
@@ -108,15 +181,11 @@ const typeDefs = gql`
       createInsurance(input: InsuranceInput): Patient
       createAddress(input: AddressInput): Patient
       createExamination(input: ExaminationInput): Patient
-
-      createVital(
-         vitalType: String
-         vitalNumber: String
-         unit: String
-         changeInfo: String
-         changeDirection: Int
-         patientId: ID!
-      ): Vital
+      createVital(input: VitalInput): Patient
+      deletePatient(id: ID!): Patient
+      createActivity(input: ActivityInput): Activity
+      addGoals(input: GoalsInput): Activity
+      createDoctor(input: DoctorInput): Doctor
    }
 `;
 
